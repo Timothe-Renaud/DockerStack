@@ -4,29 +4,21 @@
 #
 # During initial ownCloud setup, select "Storage & database" --> "Configure the database" --> "MySQL/MariaDB"
 # Database user: root
-# Database password: example
+# Database password: &achanger1
 # Database name: pick any name
 # Database host: replace "localhost" with "mysql"
 
 version: '3.1'
 
 services:
-
   owncloud:
     image: owncloud:latest
     restart: always
     ports:
       - 8080:80
-    depends_on: 
-      - mariadb
+    depends_on:
       - phpmyadmin
 
-  mariadb:
-    image: mariadb:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-  
   phpmyadmin:
     image: phpmyadmin
     restart: always
@@ -34,3 +26,51 @@ services:
       - 8081:80
     environment:
       - PMA_ARBITRARY=1
+    depends_on: 
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.5
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '&achanger1'
+
+#--------------------------------------------------------
+#               Parie WIKI
+#--------------------------------------------------------
+  mediawiki:
+    image: mediawiki
+    restart: always
+    ports:
+      - 8090:80
+    links:
+      - mariadb-2
+    volumes:
+      - /var/www/html/images
+      # After initial setup, download LocalSettings.php to the same directory as
+      # this yaml and uncomment the following line and use compose to restart
+      # the mediawiki service
+      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+    depends_on: 
+      - phpmyadmin-2
+  
+  phpmyadmin-2:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8091:80
+    environment:
+      - PMA_ARBITRARY=1
+    depends_on: 
+      - mariadb-2
+  
+  mariadb-2:
+    image: mariadb:10.5
+    restart: always
+    environment:
+      MYSQL_DATABASE: my_wiki
+      MYSQL_USER: adm_w1kiuser
+      MYSQL_PASSWORD: '&achanger1'
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+
+  
