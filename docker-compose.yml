@@ -4,13 +4,17 @@
 #
 # During initial ownCloud setup, select "Storage & database" --> "Configure the database" --> "MySQL/MariaDB"
 # Database user: root
-# Database password: &achanger1
+# Database password: ex@mple
 # Database name: pick any name
-# Database host: replace "localhost" with "mysql"
+# Database host: replace "localhost" with "mariadb"
 
 version: '3.1'
 
 services:
+
+#--------------------------------------------------------
+#               Parie OWNCLOUD
+#--------------------------------------------------------
   owncloud:
     image: owncloud:latest
     restart: always
@@ -18,22 +22,6 @@ services:
       - 8080:80
     depends_on:
       - phpmyadmin
-
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
-    ports:
-      - 8081:80
-    environment:
-      - PMA_ARBITRARY=1
-    depends_on: 
-      - mariadb
-
-  mariadb:
-    image: mariadb:10.5
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: '&achanger1'
 
 #--------------------------------------------------------
 #               Parie WIKI
@@ -44,7 +32,7 @@ services:
     ports:
       - 8090:80
     links:
-      - mariadb-2
+      - mariadb
     volumes:
       - /var/www/html/images
       # After initial setup, download LocalSettings.php to the same directory as
@@ -52,25 +40,37 @@ services:
       # the mediawiki service
       # - ./LocalSettings.php:/var/www/html/LocalSettings.php
     depends_on: 
-      - phpmyadmin-2
-  
-  phpmyadmin-2:
+      - phpmyadmin
+
+#--------------------------------------------------------
+#               Parie admin-DB-WEB
+#--------------------------------------------------------
+  phpmyadmin:
     image: phpmyadmin
     restart: always
     ports:
-      - 8091:80
+      - 8081:80
     environment:
       - PMA_ARBITRARY=1
     depends_on: 
-      - mariadb-2
-  
-  mariadb-2:
+      - mariadb
+
+#--------------------------------------------------------
+#               Parie DB
+#--------------------------------------------------------
+  mariadb:
     image: mariadb:10.5
     restart: always
     environment:
-      MYSQL_DATABASE: my_wiki
-      MYSQL_USER: adm_w1kiuser
-      MYSQL_PASSWORD: '&achanger1'
-      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: ex@mple
+
+  # mariadb-2:
+  #   image: mariadb:10.5
+  #   restart: always
+  #   environment:
+  #     MYSQL_DATABASE: my_wiki
+  #     MYSQL_USER: adm_w1kiuser
+  #     MYSQL_PASSWORD: ex@mple
+  #     MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
 
   
