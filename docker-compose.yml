@@ -1,71 +1,36 @@
-version: "3.7"
-# On Déclare chaque conteneur comme un "service"
+# ownCloud with MariaDB/MySQL
+#
+# Access via "http://localhost:8080" (or "http://$(docker-machine ip):8080" if using docker-machine)
+#
+# During initial ownCloud setup, select "Storage & database" --> "Configure the database" --> "MySQL/MariaDB"
+# Database user: root
+# Database password: example
+# Database name: pick any name
+# Database host: replace "localhost" with "mysql"
+
+version: '3.1'
+
 services:
-# Service front
-  front:
-# Construire l'image à partir d'un fichier dockerfile dans le même répertoire que le compose file.
-    # build: ./
-  # Construire l'image à partir d'un dockerfile ailleurs, avec un autre nom.
-    build:
-      context: ./
-      dockerfile: monsite.Dockerfile
+
+  owncloud:
+    image: owncloud:latest
+    restart: always
     ports:
-  # On associe le port 7777 du conteneur avec le port 7777 de la machine hote.
-      - "7777:7777"
-    networks:
-      - front
-    depends_on:
-      - db
+      - 8080:80
+    depends_on: 
+      - mariadb
+      - phpmyadmin
 
-# Service backend
-  backend:
-    # slim = 53mo , latest= 350mo
-    image: node:slim
-  # On associe le port 7777 du conteneur avec le port 7777 de la machine hote.
+  mariadb:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+  
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
     ports:
-      - "8888:8888"
-    networks:
-      - front
-      - db
-      - backend
-# On peu utiliser command pour ajouter des argument a l'entrpoint de l'image      
-    # command:
-    #   - -e
-    #   - require('http').createServer(function (req, res) { res.end('conteneur backend node'); }).listen(7000)
-# On peu aussi ecraser l'entrypoint de l'image node:slim
-    entrypoint:
-      - node 
-      - -e
-      - require('http').createServer(function (req, res) { res.end('conteneur backend node'); }).listen(7000)      
-# Ne pas démarrer le conteneur backend tant que db n'a pas démarré.
-    depends_on:
-      - db
-
-# Service db
-  db:
-    image: mongo
-    # On declare le port de l'aplication dans le conteneur (facultatif, documentation)
-    ports:
-      - "27017"
-    networks:
-      - db
-# On mappe le volume db-data (déclaré dans la section volumes) avec un repertoire dans le conteneur.
-    volumes:
-      - "db-data:/var/lib/mongodb"
-    # On pu désactiver les log d'un conteneur trop verbose
-    # Idéalement on démarre juste compose ne mode background (dockere-compose -d, --detach)
-    logging:
-      driver: none
-# Si l'on voulais partager le dossier avec le host:
-#      - "/home/thomas/docker-mongodb:/var/lib/mongodb"
-
-# On déclare les réseaux (pas d'options, bridge par defaut).
-networks:
-  front:
-  backend:
-  db:
-
-# On déclare le volume (syntaxe courte => pas d'options).
-volumes:
-# Syntaxe "longue", aucun argument (objet)
-  db-data:
+      - 8081:80
+    environment:
+      - PMA_ARBITRARY=1
