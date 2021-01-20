@@ -1,11 +1,19 @@
-# server web pour testé site web html tres rapidement
-# tech: python image from docker
+FROM node:13.12.0-alpine
 
-FROM python
-RUN apt-get update && apt-get install unzip nano iputils-ping -y
-#RUN wget URL -O lol.zip
-COPY /website /tmp/
-COPY /website.zip /tmp/
-EXPOSE 7777
-ENTRYPOINT [ "python", "-m", "http.server", "7777"]
+# set working directory
+WORKDIR /app
 
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install --silent
+RUN npm install react-scripts@3.4.1 -g --silent
+
+# add app
+COPY . ./
+EXPOSE 3000
+# start app
+CMD ["npm", "start"]
