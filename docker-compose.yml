@@ -8,7 +8,7 @@
 # Database name: pick any name
 # Database host: replace "localhost" with "mariadb"
 
-version: '3.1'
+version: '3.7'
 
 services:
 
@@ -35,10 +35,7 @@ services:
       - mariadb
     volumes:
       - /var/www/html/images
-      # After initial setup, download LocalSettings.php to the same directory as
-      # this yaml and uncomment the following line and use compose to restart
-      # the mediawiki service
-      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      #- ./LocalSettings/LocalSettings.php:/var/www/html/LocalSettings.php
     depends_on: 
       - phpmyadmin
 
@@ -69,4 +66,7 @@ services:
 #               Parie WEB-SRV
 #--------------------------------------------------------
   front:
-    build:
+    build: monsite.Dockerfile
+    image: my-app:latest
+    ports: 
+      - "8888:80"
