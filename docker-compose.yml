@@ -1,4 +1,4 @@
-# ownCloud with MariaDB/MySQL
+# ownCloud / mediaWiki / phpMyAdmin with MariaDB/MySQL 
 #
 # Access via "http://localhost:8080" (or "http://$(docker-machine ip):8080" if using docker-machine)
 #
@@ -9,9 +9,7 @@
 # Database host: replace "localhost" with "mariadb"
 
 version: '3.1'
-
 services:
-
 #--------------------------------------------------------
 #               Parie OWNCLOUD
 #--------------------------------------------------------
@@ -19,7 +17,7 @@ services:
     image: owncloud:latest
     restart: always
     ports:
-      - 8080:80
+      - "8090:80"
     depends_on:
       - phpmyadmin
 
@@ -30,7 +28,7 @@ services:
     image: mediawiki
     restart: always
     ports:
-      - 8090:80
+      - "8091:80"
     links:
       - mariadb
     volumes:
@@ -38,7 +36,7 @@ services:
       # After initial setup, download LocalSettings.php to the same directory as
       # this yaml and uncomment the following line and use compose to restart
       # the mediawiki service
-      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+#      - ./LocalSettings.php:/var/www/html/LocalSettings.php
     depends_on: 
       - phpmyadmin
 
@@ -49,7 +47,7 @@ services:
     image: phpmyadmin
     restart: always
     ports:
-      - 8081:80
+      - "8092:80"
     environment:
       - PMA_ARBITRARY=1
     depends_on: 
@@ -64,13 +62,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ex@mple
 
-  # mariadb-2:
-  #   image: mariadb:10.5
-  #   restart: always
-  #   environment:
-  #     MYSQL_DATABASE: my_wiki
-  #     MYSQL_USER: adm_w1kiuser
-  #     MYSQL_PASSWORD: ex@mple
-  #     MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-
-  
+#--------------------------------------------------------
+#               Parie wite web & server
+#--------------------------------------------------------
+  web:
+    image: my-app:latest
+    ports: 
+    - "8888:80"
