@@ -63,14 +63,10 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ex@mple
-
-  # mariadb-2:
-  #   image: mariadb:10.5
-  #   restart: always
-  #   environment:
-  #     MYSQL_DATABASE: my_wiki
-  #     MYSQL_USER: adm_w1kiuser
-  #     MYSQL_PASSWORD: ex@mple
-  #     MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-
   
+
+#--------------------------------------------------------
+#               Parie WEB-SRV
+#--------------------------------------------------------
+  front:
+    build:
