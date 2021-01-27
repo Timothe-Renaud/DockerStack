@@ -74,9 +74,7 @@ services:
 #               Parie WEB-SRV
 #--------------------------------------------------------
   # front:
-  #   build: 
-  #     context: .
-  #     dockerfile: monsite.Dockerfile
+  #   build: monsite.Dockerfile
   #   image: my-app:latest
   #   ports: 
   #     - "8888:80"
