@@ -8,10 +8,18 @@
 # Database name: pick any name
 # Database host: replace "localhost" with "mariadb"
 
-version: '3.7'
+version: '3.9'
 
 services:
 
+#--------------------------------------------------------
+#               Parie markdowneditor
+#--------------------------------------------------------
+  markdown:
+    image: v4tech/markdown-editor
+    restart: always
+    ports: 
+    - "1018:80"
 #--------------------------------------------------------
 #               Parie OWNCLOUD
 #--------------------------------------------------------
@@ -19,7 +27,7 @@ services:
     image: owncloud:latest
     restart: always
     ports:
-      - 8080:80
+      - "8080:80"
     depends_on:
       - phpmyadmin
 
@@ -30,7 +38,7 @@ services:
     image: mediawiki
     restart: always
     ports:
-      - 8090:80
+      - "8090:80"
     links:
       - mariadb
     volumes:
@@ -46,7 +54,7 @@ services:
     image: phpmyadmin
     restart: always
     ports:
-      - 8081:80
+      - "8081:80"
     environment:
       - PMA_ARBITRARY=1
     depends_on: 
@@ -65,8 +73,8 @@ services:
 #--------------------------------------------------------
 #               Parie WEB-SRV
 #--------------------------------------------------------
-  front:
-    build: monsite.Dockerfile
-    image: my-app:latest
-    ports: 
-      - "8888:80"
+  # front:
+  #   build: monsite.Dockerfile
+  #   image: my-app:latest
+  #   ports: 
+  #     - "8888:80"
