@@ -58,7 +58,6 @@ MardownEditor:**Personnalmage**
 Schema de l'architecture du stack:
 
 ```mermaid
-
 A[Utilisateur] -- Host_url + Port --> B((Host_URL:PORT))
 B --> E((Markdown))
 B --> C(MediaWiki)
