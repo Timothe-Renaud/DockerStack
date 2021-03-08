@@ -76,3 +76,21 @@ A -- docker exec -it bash  --> D
 - Make the web srv working (using personnal Dockerfile).
 - Add/Enable a kibana SRV to look the logs and stuff that go in & out of the Maraidb SRV.
 - Add ".env" file to help the configuration environment.
+
+
+Regular **Markdown** here.
+
+<div hidden>
+```
+@startuml firstDiagram
+
+Alice -> Bob: Hello
+Bob -> Alice: Hi!
+		
+@enduml
+```
+</div>
+
+![](firstDiagram.svg)
+
+Some more markdown.
