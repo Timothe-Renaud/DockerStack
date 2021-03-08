@@ -56,9 +56,11 @@ MardownEditor:**Personnalmage**
 ## Diagramme
 
 Schema de l'architecture du stack:
-
+<div hidden>
+	
 ```mermaid
-graph LR
+@startuml firstDiagram 
+
 A[Utilisateur] -- Host_url + Port --> B((Host_URL:PORT))
 B --> E((Markdown))
 B --> C(MediaWiki)
@@ -69,26 +71,12 @@ P --> D
 C --> D((Mariadb))
 A -- docker exec -it bash  --> D
 ```
-
+</div>
 
 ## TODO
 - Add Traefik.
 - Make the web srv working (using personnal Dockerfile).
 - Add/Enable a kibana SRV to look the logs and stuff that go in & out of the Maraidb SRV.
 - Add ".env" file to help the configuration environment.
-
-
-
-<div hidden>
-
-```
-@startuml firstDiagram
-
-Alice -> Bob: Hello
-Bob -> Alice: Hi!
-		
-@enduml
-```
-</div>
 
 ![](firstDiagram.svg)
