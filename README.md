@@ -58,14 +58,15 @@ MardownEditor:**Personnalmage**
 Schema de l'architecture du stack:
 
 ```mermaid
+graph LR
 A[Utilisateur] -- Host_url + Port --> B((Host_URL:PORT))
 B --> E((Markdown))
 B --> C(MediaWiki)
 B --> G{Owncloud}
 B --> P{PHPMyAdmin}
 G --> D
-P -->D
-C -->D((Mariadb))
+P --> D
+C --> D((Mariadb))
 A -- docker exec -it bash  --> D
 ```
 
