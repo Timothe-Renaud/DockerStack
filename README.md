@@ -78,9 +78,9 @@ A -- docker exec -it bash  --> D
 - Add ".env" file to help the configuration environment.
 
 
-Regular **Markdown** here.
 
 <div hidden>
+
 ```
 @startuml firstDiagram
 
@@ -92,5 +92,3 @@ Bob -> Alice: Hi!
 </div>
 
 ![](firstDiagram.svg)
-
-Some more markdown.
