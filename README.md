@@ -1,9 +1,8 @@
 # Welcome to StackEdit!
-![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/plantuml/plantuml-server/master/src/main/webapp/resource/test2diagrams.txt)
 
-@Author: Timothe-Renaud Langlois-Teston
-@Date: Janv 2021
-@docker-compose version: 3.7
+- @Author: Timothe-Renaud Langlois-Teston
+- @Date: Janv 2021
+- @docker-compose version: 3.7
 
 # Topo:
 This stack is used for personal entertainment only. Feel free to upgrade the stack with your ideas.
@@ -59,7 +58,7 @@ MardownEditor:**Personnalmage**
 Schema de l'architecture du stack:
 
 ```mermaid
-graph LR
+
 A[Utilisateur] -- Host_url + Port --> B((Host_URL:PORT))
 B --> E((Markdown))
 B --> C(MediaWiki)
