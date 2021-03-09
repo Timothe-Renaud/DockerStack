@@ -56,22 +56,14 @@ MardownEditor:**Personnalmage**
 ## Diagramme
 
 Schema de l'architecture du stack:
-<div hidden>
-	
 ```mermaid
-@startuml firstDiagram 
-
-A[Utilisateur] -- Host_url + Port --> B((Host_URL:PORT))
-B --> E((Markdown))
-B --> C(MediaWiki)
-B --> G{Owncloud}
-B --> P{PHPMyAdmin}
-G --> D
-P --> D
-C --> D((Mariadb))
-A -- docker exec -it bash  --> D
+graph TD;
+    A(utilisateur)-->B(HOST_IP + PORT);
+    B-->C(Owncloud)-->X(mariadb);
+    B-->D(MediaWiki)-->X;
+    B-->E(MarkDownEditor);
+    B-->F(phpMyAdmin)-->X;
 ```
-</div>
 
 ## TODO
 - Add Traefik.
@@ -79,4 +71,3 @@ A -- docker exec -it bash  --> D
 - Add/Enable a kibana SRV to look the logs and stuff that go in & out of the Maraidb SRV.
 - Add ".env" file to help the configuration environment.
 
-![](firstDiagram.svg)
