@@ -27,21 +27,14 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-  whoami:
-    image: "traefik/whoami"
-    container_name: "simple-service"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`testing.localhost`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
-  #--------------------------------------------------------
+#--------------------------------------------------------
 #               Parie markdowneditor
 #--------------------------------------------------------
   markdown:
     image: v4tech/markdown-editor
     restart: always
     ports: 
-    - "1018:80"
+      - "1018:80"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`md.localhost`)"
@@ -53,7 +46,7 @@ services:
     image: owncloud:latest
     restart: always
     ports:
-      - "8080:80"
+      - "8091:80"
     depends_on:
       - phpmyadmin
     labels:

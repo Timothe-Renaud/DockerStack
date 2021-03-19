@@ -34,6 +34,10 @@ Hosting a Databse SRV with Mariadb, for the storage of the MediaWiki App & Owncl
 And for express documentation case, (cause your a man of documentation ) , a mini MardownEditor App is also hosted on the stack.
 
 ## Desciption:
+traefik:**latest**
+- port: 80 & 8080
+utiliser comme reverse proxy dans cette architecture logiciel.
+
 phpmyadmin:**latest**
 - port: 8081 -> 80
 
@@ -66,8 +70,6 @@ graph TD;
 ```
 
 ## TODO
-- Add Traefik.
 - Make the web srv working (using personnal Dockerfile).
-- Add/Enable a kibana SRV to look the logs and stuff that go in & out of the Maraidb SRV.
 - Add ".env" file to help the configuration environment.
 
